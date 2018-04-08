@@ -16,12 +16,12 @@ ActiveRecord::Schema.define(version: 20180408044321) do
   enable_extension "plpgsql"
 
   create_table "credit_cards", force: :cascade do |t|
-    t.integer "number"
+    t.string "number"
     t.date "expiration"
     t.bigint "customer_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "type"
+    t.string "issuer"
     t.index ["customer_id"], name: "index_credit_cards_on_customer_id"
   end
 
@@ -41,7 +41,7 @@ ActiveRecord::Schema.define(version: 20180408044321) do
 
   create_table "orders", force: :cascade do |t|
     t.datetime "time"
-    t.decimal "amount"
+    t.decimal "amount", precision: 5, scale: 2
     t.bigint "customer_id"
     t.bigint "movie_id"
     t.bigint "theater_id"

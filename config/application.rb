@@ -17,3 +17,7 @@ module Movies
 
   end
 end
+
+BusinessTime::Config.work_week = [:sun, :mon, :tue, :wed, :thu, :fri, :sat]
+BusinessTime::Config.beginning_of_workday = "10:00 am"
+BusinessTime::Config.end_of_workday = "11:00 pm"
