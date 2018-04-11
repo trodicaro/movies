@@ -35,6 +35,8 @@ ActiveRecord::Schema.define(version: 20180408044321) do
   create_table "movies", force: :cascade do |t|
     t.string "name"
     t.integer "duration"
+    t.string "backdrop_path"
+    t.text "overview"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

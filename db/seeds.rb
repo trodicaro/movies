@@ -1,22 +1,32 @@
 require 'faker'
+require 'net/http'
+require 'json'
 
-Theater.create!(name: 'The Music Box', seating: [100, 250, 50].sample)
-Theater.create!(name: 'Davis Theater', seating: [100, 250, 50].sample)
-Theater.create!(name: 'ShowPlace ICON', seating: [100, 250, 50].sample)
-Theater.create!(name: "Landmark's Century Center", seating: [100, 250, 50].sample)
-Theater.create!(name: 'Gene Siskel Film Center', seating: [100, 250, 50].sample)
-Theater.create!(name: 'AMC River East 21', seating: [100, 250, 50].sample)
+Theater.create!(name: 'Screen 1', seating: [100, 250, 50].sample)
+Theater.create!(name: 'Screen 2', seating: [100, 250, 50].sample)
+Theater.create!(name: 'Screen 3', seating: [100, 250, 50].sample)
+Theater.create!(name: 'Screen 4', seating: [100, 250, 50].sample)
+Theater.create!(name: 'Screen 5', seating: [100, 250, 50].sample)
 
-Movie.create!(name: 'A Wrinkle in Time', duration: rand(90..120))
-Movie.create!(name: 'The Shape of Water', duration: rand(90..120))
-Movie.create!(name: 'Paddington 2', duration: rand(90..120))
-Movie.create!(name: 'In the Fade', duration: rand(90..120))
-Movie.create!(name: 'Loveless', duration: rand(90..120))
-Movie.create!(name: 'Black Panther', duration: rand(90..120))
-Movie.create!(name: 'The Death of Stalin', duration: rand(90..120))
-Movie.create!(name: 'Anihilation', duration: rand(90..120))
-Movie.create!(name: 'Pacific Rim', duration: rand(90..120))
-Movie.create!(name: 'Isle of Dogs', duration: rand(90..120))
+# http://blog.honeybadger.io/how-to-try-again-when-exceptions-happen-in-ruby/
+uri =  URI("http://api.themoviedb.org/4/discover/movie?api_key=#{Rails.application.secrets.themoviedb_api_key}&sort_by=popularity.desc&primary_release_year=#{Date.today.year}")
+
+begin
+  retries ||= 0
+  puts "try ##{ retries }"
+  response = Net::HTTP.get(uri)
+rescue
+  retry if (retries += 1) < 3
+end
+
+movies = JSON.parse(response)["results"]
+
+movies.map do |movie| Movie.create!(
+  name: movie['title'],
+  duration: rand(90..120),
+  backdrop_path: movie['backdrop_path'],
+  overview: movie['overview'])
+end
 
 40.times do
   customer = Customer.create!(name: Faker::Name.name , email: Faker::Internet.email)

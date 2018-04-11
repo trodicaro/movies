@@ -1,5 +1,12 @@
 {
   "name": "movies",
   "private": true,
-  "dependencies": {}
+  "dependencies": {
+    "bootstrap": "4.0.0-alpha.6"
+  },
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:trodicaro/movies.git",
+  "author": "Rodica Trifan <trodicaro@gmail.com>",
+  "license": "MIT"
 }
