@@ -16,7 +16,7 @@
             %a.nav-link{href: "#"} Dashboard
   .container.d-flex.justify-content-center.bg-faded
     = image_tag(asset_path('now_showing.png'), alt: 'Now showing sign', class: 'm-4', style: 'max-width: 410px; max-height: 70px;')
-  .container.card-block.bg-faded
+  .container.card-deck.bg-faded
     - @movies.each do |movie|
       .card.m-2
         = image_tag("http://image.tmdb.org/t/p/w342/#{movie.backdrop_path}", :alt => "Image for #{movie.name}")
