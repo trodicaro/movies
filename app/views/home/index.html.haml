@@ -1,20 +1,20 @@
-.wrapper.d-flex.flex-column{style: "background-color: #282828;"}
-  .container.bg-faded
-    .d-flex.flex-row.justify-content-between.align-items-center
-      %a.navbar-brand.d-flex.flex-row.justify-content-between{href: root_path}
+.wrapper{style: 'background-color: #282828;'}
+  .container.bg-light
+    <!-- .d-flex.flex-row.justify-content-between.align-items-center -->
+    %nav.navbar.navbar-expand-lg.navbar-light
+      %a.navbar-brand{href: root_path}
         %img{:alt => "logo", :src => asset_path("regal_cinemas_logo.png"),  style: "max-width: 210px; max-height: 65px;"}
-      %nav.navbar.navbar-expand-lg.navbar-light.bg-light
-        %button.navbar-toggler{"aria-controls" => "navbarTogglerDemo01", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-target" => "#navbarTogglerDemo01", "data-toggle" => "collapse", :type => "button"}
-          %span.navbar-toggler-icon
-        #navbarTogglerDemo01.collapse.navbar-collapse
-          %a.navbar-brand{href: "#"} Menu
-          %ul.navbar-nav.mr-auto.mt-2.mt-lg-0
-            %li.nav-item.active
-              %a.nav-link{href: "#"}
-                Home
-                %span.sr-only (current)
-            %li.nav-item
-              %a.nav-link{href: "#"} Dashboard
+      %button.navbar-toggler.navbar-toggler-right{"aria-controls" => "navbarTogglerDemo01", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-target" => "#navbarTogglerDemo01", "data-toggle" => "collapse", :type => "button"}
+        %span.navbar-toggler-icon
+      #navbarTogglerDemo01.collapse.navbar-collapse
+        <!-- %a.navbar-brand{href: "#"} Menu -->
+        %ul.navbar-nav.mr-auto.mt-2.mt-lg-0
+          %li.nav-item.active
+            %a.nav-link{href: "#"}
+              Showtimes
+              %span.sr-only (current)
+          %li.nav-item
+            %a.nav-link{href: "#"} Dashboard
     .d-flex.justify-content-center
       = image_tag(asset_path('now_showing.gif'), alt: 'Now showing sign', class: 'm-4', style: 'max-width: 410px; max-height: 70px;')
     .card-deck
@@ -36,8 +36,3 @@
       %a.rounded.p-3{href: "http://facebook.com/myname", :target => "_blank"}
         = image_tag(asset_path('social_facebook.png'))
 
-:css
-  .card-deck
-    @media (min-width: 768px) {
-      column-count: 2;
-    }
