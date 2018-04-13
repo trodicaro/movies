@@ -19,6 +19,16 @@
     = image_tag(asset_path('social_facebook.png'))
 
 :css
+  @media (min-width: 0px) {
+    .card-columns {
+      column-count: 1;
+    }
+  }
+  @media (min-width: 480px) {
+    .card-columns {
+      column-count: 2;
+    }
+  }
   @media (min-width: 768px) {
     .card-columns {
       column-count: 2;
