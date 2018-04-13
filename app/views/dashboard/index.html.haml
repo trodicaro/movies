@@ -1,0 +1,115 @@
+.wrapper{style: 'background-color: #282828;'}
+  .container.bg-light
+    .d-flex.flex-column.justify-content-center
+      #total-revenue.m-3
+      #revenue-by-day.m-3
+      #popular-movies.m-3
+      #popular-times.m-3
+
+:javascript
+  $(function() {
+    Highcharts.setOptions({
+      responsive: {
+        rules: [{
+          condition: {
+            maxWidth: 500
+          },
+          chartOptions: {
+            xAxis: {
+              labels: {
+                formatter: function () {
+                  return this.value.charAt(0);
+                }
+              }
+            },
+            yAxis: {
+              labels: {
+                align: 'left',
+                x: 0,
+                y: -2
+              },
+              title: {
+                text: ''
+              }
+            }
+          }
+        }]
+      }
+    });
+
+    Highcharts.chart('total-revenue', {
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Total Revenue'
+        },
+        xAxis: {
+            categories: #{raw Movie.pluck(:name)},
+            crosshair: true
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Revenue by Movie'
+            }
+        },
+        tooltip: {
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        },
+        plotOptions: {
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            }
+        },
+        series: [{
+            name: 'Movie Revenue',
+            data: [10 * 5, 5 * 5, 7 * 5, 41 * 5, 13 * 5, 16 * 5, 32 * 5, 17 * 5, 22 * 5, 18 * 5, 19 * 5, 20* 5]
+        }]
+    });
+
+    Highcharts.chart('popular-movies', {
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Movie Popularity'
+        },
+        xAxis: {
+            categories: #{raw Movie.pluck(:name)},
+            crosshair: true
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Orders by Movie'
+            }
+        },
+        tooltip: {
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        },
+        plotOptions: {
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            }
+        },
+        series: [{
+            name: 'Movie Orders',
+            data: [10, 5, 7, 41, 13, 16, 32, 17, 22, 18, 19, 20]
+        }]
+    });
+  });
+
+

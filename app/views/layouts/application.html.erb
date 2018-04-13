@@ -9,6 +9,11 @@
   </head>
 
   <body>
-    <%= yield %>
+    <div class = 'wrapper' style: 'background-color: #282828;'>
+      <div class='container bg-light'>
+        <%= render "layouts/navbar" %>
+        <%= yield %>
+      </div>
+    </div>
   </body>
 </html>
