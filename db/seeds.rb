@@ -35,12 +35,13 @@ Movie.all.each do |movie|
   end
 end
 
-# 40.times do
-#   customer = Customer.create!(name: Faker::Name.name , email: Faker::Internet.email)
+40.times do
+  customer = Customer.create!(name: Faker::Name.name , email: Faker::Internet.email)
 
-#   customer.orders << Order.new(time: rand(1..500).business_hours.from_now,
-#     total_cost: rand(5.00..20.00),
-#     seat_count: rand(1..6),
-#     screening: Screening.all.sample
-# end
+  customer.orders.create!(
+    total_cost: rand(5.00..150.00),
+    seat_count: rand(1..6),
+    screening: Screening.all.sample)
+  end
+end
 
