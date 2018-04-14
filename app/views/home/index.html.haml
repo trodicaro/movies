@@ -13,7 +13,7 @@
         .showing-times.d-flex.flex-row.flex-wrap.justify-content-center
           - movie.screenings.order(:scheduled_at).each do |screening|
             - if screening.scheduled_today?
-              %button.btn.btn-secondary.m-1{:type => "button", class: ("disabled" if screening.passed?)}
+              %button.btn.btn-secondary.m-1{:type => "button", class: ("disabled" if screening.passed? || screening.sold_out?)}
                 = screening.scheduled_at.strftime("%H:%M")
 .d-flex.flex-row.justify-content-center
   %a.rounded.p-3{href: "http://twitter.com/myname", :target => "_blank"}
