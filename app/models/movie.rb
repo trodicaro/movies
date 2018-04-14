@@ -1,3 +1,4 @@
 class Movie < ApplicationRecord
-  has_many :orders
+  has_many :screenings
+  has_many :orders, through: :screenings
 end

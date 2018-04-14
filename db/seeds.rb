@@ -23,21 +23,24 @@ movies = JSON.parse(response)["results"]
 
 movies.map do |movie| Movie.create!(
   name: movie['title'],
-  duration: rand(90..120),
   backdrop_path: movie['backdrop_path'],
   overview: movie['overview'])
 end
 
-40.times do
-  customer = Customer.create!(name: Faker::Name.name , email: Faker::Internet.email)
+theaters = Theater.all
 
-  customer.credit_cards << CreditCard.new(number: Faker::Business.credit_card_number,
-    expiration: Faker::Business.credit_card_expiry_date,
-    issuer: ['Visa', 'MasterCard', 'Discover', 'Amex'].sample)
-
-  customer.orders << Order.new(time: rand(1..500).business_hours.from_now,
-    amount: rand(5.00..20.00),
-    movie: Movie.all.sample,
-    theater: Theater.all.sample)
+Movie.all.each do |movie|
+  rand(5..10).times do |i|
+    movie.screenings << Screening.new(scheduled_at: rand(1..72).business_hours.from_now.beginning_of_hour, theater: theaters.sample)
+  end
 end
+
+# 40.times do
+#   customer = Customer.create!(name: Faker::Name.name , email: Faker::Internet.email)
+
+#   customer.orders << Order.new(time: rand(1..500).business_hours.from_now,
+#     total_cost: rand(5.00..20.00),
+#     seat_count: rand(1..6),
+#     screening: Screening.all.sample
+# end
 

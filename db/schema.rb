@@ -10,20 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180408044321) do
+ActiveRecord::Schema.define(version: 20180408040127) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "credit_cards", force: :cascade do |t|
-    t.string "number"
-    t.date "expiration"
-    t.bigint "customer_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "issuer"
-    t.index ["customer_id"], name: "index_credit_cards_on_customer_id"
-  end
 
   create_table "customers", force: :cascade do |t|
     t.string "name"
@@ -34,7 +24,6 @@ ActiveRecord::Schema.define(version: 20180408044321) do
 
   create_table "movies", force: :cascade do |t|
     t.string "name"
-    t.integer "duration"
     t.string "backdrop_path"
     t.text "overview"
     t.datetime "created_at", null: false
@@ -42,16 +31,24 @@ ActiveRecord::Schema.define(version: 20180408044321) do
   end
 
   create_table "orders", force: :cascade do |t|
-    t.datetime "time"
-    t.decimal "amount", precision: 5, scale: 2
+    t.decimal "total_cost", precision: 5, scale: 2
+    t.integer "seat_count"
     t.bigint "customer_id"
+    t.bigint "screening_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["customer_id"], name: "index_orders_on_customer_id"
+    t.index ["screening_id"], name: "index_orders_on_screening_id"
+  end
+
+  create_table "screenings", force: :cascade do |t|
+    t.datetime "scheduled_at"
     t.bigint "movie_id"
     t.bigint "theater_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["customer_id"], name: "index_orders_on_customer_id"
-    t.index ["movie_id"], name: "index_orders_on_movie_id"
-    t.index ["theater_id"], name: "index_orders_on_theater_id"
+    t.index ["movie_id"], name: "index_screenings_on_movie_id"
+    t.index ["theater_id"], name: "index_screenings_on_theater_id"
   end
 
   create_table "theaters", force: :cascade do |t|
@@ -61,8 +58,8 @@ ActiveRecord::Schema.define(version: 20180408044321) do
     t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "credit_cards", "customers"
   add_foreign_key "orders", "customers"
-  add_foreign_key "orders", "movies"
-  add_foreign_key "orders", "theaters"
+  add_foreign_key "orders", "screenings"
+  add_foreign_key "screenings", "movies"
+  add_foreign_key "screenings", "theaters"
 end
