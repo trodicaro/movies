@@ -1,0 +1,31 @@
+#purchaseModal.modal
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %h5 Purchase tickets
+        %button.close{"aria-label" => "Close", type: "button", data: {dismiss: "modal"}}
+          %span{"aria-hidden" => "true"} ×
+      .modal-body
+        = form_for @order, remote: true do |f|
+          = f.fields_for :customer do |customer_form|
+            .form-group
+              = customer_form.label 'Last Name'
+              = customer_form.text_field :last_name, class: 'form-control', type: 'text', required: true
+              = customer_form.label 'First Name'
+              = customer_form.text_field :first_name, class: 'form-control', type: 'text', required: true
+            .form-group
+              = customer_form.label 'Email'
+              = customer_form.text_field :email, class: 'form-control', type: 'email', placeholder: 'name@example.com', required: true
+          .form-group
+            = f.label 'Select number of seats'
+            = f.select :seat_count, options_for_select([[1,1],[2,2], [3,3], [4,4], [5,5], [6,6]]), {}, class: 'form-control'
+            / = f.text_field :total_cost, class: 'form-control', value: 10
+            = f.hidden_field :total_cost, value: 10
+            = f.hidden_field :screening_id, value: @screening.id
+          .form-group
+            = f.fields_for :credit_card do |credit_card_form|
+              = credit_card_form.label "Credit Card Number"
+              = credit_card_form.text_field :card_number, class: 'form-control', pattern: "[0-9]{14,16}", title: "Credit Card should contain only numbers and have between 14 and 16 digits"
+              = credit_card_form.label 'Expiration Date'
+              = credit_card_form.date_field :expiration_date, class: 'form-control', min: Date.today, required: true
+            = f.submit 'Purchase', class: 'btn btn-primary float-right'
