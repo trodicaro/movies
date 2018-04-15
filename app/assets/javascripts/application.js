@@ -15,4 +15,5 @@
 //= require tether/dist/js/tether
 //= require bootstrap/dist/js/bootstrap
 //= require highcharts
+//= require tablesorter/dist/js/jquery.tablesorter.combined
 //= require_tree .

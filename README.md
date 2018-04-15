@@ -44,6 +44,7 @@ I have used couple of new(ish) tools to me while getting this started: Bootstrap
 * continuous integration and test coverage ([sample how-to](https://medium.com/craft-academy/getting-started-with-rails-tests-continuous-integration-deployment-7b5bfec905a5))
 * save pics with Paperclip ([sample how-to](http://julianveling.com/?p=18))
 * React-ify some components (eg:movie, movie list, etc)
+* Implement tablesorter widgets for subtotals and filtering.
 
 ### Notes
 * App seeds and uses links for movie images via themoviedb API - must be connected to internet to work

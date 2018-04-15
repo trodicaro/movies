@@ -1,13 +1,64 @@
 .wrapper{style: 'background-color: #282828;'}
   .container.bg-light
     .d-flex.flex-column.justify-content-center
-      #total-revenue.m-3
-      #revenue-by-day.m-3
-      #popular-movies.m-3
-      #popular-times.m-3
+      %ul.nav.nav-tabs
+        %li.nav-item.active
+          %a.nav-link{data: {toggle:'tab'}, href: '#charts'} Charts
+        %li.nav-item
+          %a.nav-link{data: {toggle:'tab'}, href: '#listings'} Listings
+      .tab-content
+        #charts.tab-pane.active
+          #movie-sales.m-3
+          #popular-movies.m-3
+          #daily-sales.m-3
+          #popular-times.m-3
+        #listings.tab-pane
+          .table-responsive.bg-white.mb-3.mt-3
+            %h3.p-3.mb-2.text-center Order listing
+            %table.table.table-hover.table-sm.tablesorter
+              %thead
+                %tr
+                  %th Customer
+                  %th Email
+                  %th Total Cost
+                  %th Seat Count
+                  %th Theater
+                  %th Date
+                  %th Time
+                  %th Movie Name
+              %tbody
+                - @orders.first(20).each do |order|
+                  %tr
+                    %td= order.customer.full_name
+                    %td= order.customer.email
+                    %td= order.total_cost
+                    %td= order.seat_count
+                    %td= order.screening.theater.name
+                    %td= order.screening.scheduled_at.strftime("%m-%d")
+                    %td= order.screening.scheduled_at.strftime("%H:%M")
+                    %td= order.screening.movie.name
+          .table-responsive.bg-white.mb-3.mt-3
+            %h3.p-3.mb-2.text-center Movie listing
+            %table.table.table-hover.table-sm.tablesorter
+              %thead
+                %tr
+                  %th Movie Name
+                  %th Customer Name
+                  %th Total Cost
+                  %th Seat Count
+              %tbody
+                - @movies.first(20).each do |movie|
+                  - movie.orders.each do |order|
+                    %tr
+                      %td= movie.name
+                      %td= order.customer.full_name
+                      %td= order.total_cost
+                      %td= order.seat_count
 
 :javascript
   $(function() {
+    $('.tablesorter').tablesorter();
+
     Highcharts.setOptions({
       responsive: {
         rules: [{
@@ -30,27 +81,27 @@
       }
     });
 
-    Highcharts.chart('total-revenue', {
+    Highcharts.chart('movie-sales', {
         chart: {
             type: 'column'
         },
         title: {
-            text: 'Total Revenue'
+            text: 'Movie Sales'
         },
         xAxis: {
-            categories: #{raw Movie.pluck(:name)},
+            categories: #{raw @movie_sales.first},
             crosshair: true
         },
         yAxis: {
             min: 0,
             title: {
-                text: 'Revenue by Movie'
+                text: 'Movie Names'
             }
         },
         tooltip: {
             headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
             pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+                '<td style="padding:0"><b>${point.y:.1f}</b></td></tr>',
             footerFormat: '</table>',
             shared: true,
             useHTML: true
@@ -62,8 +113,8 @@
             }
         },
         series: [{
-            name: 'Movie Revenue',
-            data: [10 * 5, 5 * 5, 7 * 5, 41 * 5, 13 * 5, 16 * 5, 32 * 5, 17 * 5, 22 * 5, 18 * 5, 19 * 5, 20* 5]
+            name: 'Movie Sales',
+            data: #{raw @movie_sales.second}
         }]
     });
 
@@ -72,22 +123,22 @@
             type: 'column'
         },
         title: {
-            text: 'Movie Popularity'
+            text: 'Popular Movies'
         },
         xAxis: {
-            categories: #{raw Movie.pluck(:name)},
+            categories: #{raw @popular_movies.first},
             crosshair: true
         },
         yAxis: {
             min: 0,
             title: {
-                text: 'Orders by Movie'
+                text: 'Popularity by Movie'
             }
         },
         tooltip: {
             headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
             pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+                '<td style="padding:0"><b>{point.y:.1f} points</b></td></tr>',
             footerFormat: '</table>',
             shared: true,
             useHTML: true
@@ -99,8 +150,45 @@
             }
         },
         series: [{
-            name: 'Movie Orders',
-            data: [10, 5, 7, 41, 13, 16, 32, 17, 22, 18, 19, 20]
+            name: 'Movie Popularity',
+            data: #{raw @popular_movies.last}
+        }]
+    });
+
+    Highcharts.chart('daily-sales', {
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Daily Sales'
+        },
+        xAxis: {
+            categories: #{raw @daily_sales.first},
+            crosshair: true
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Daily Sales'
+            }
+        },
+        tooltip: {
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>${point.y:.1f}</b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        },
+        plotOptions: {
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            }
+        },
+        series: [{
+            name: 'Daily Sales',
+            data: #{raw @daily_sales.last}
         }]
     });
   });

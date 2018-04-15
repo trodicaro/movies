@@ -19,23 +19,24 @@ rescue
   retry if (retries += 1) < 3
 end
 
-movies = JSON.parse(response)["results"]
+results = JSON.parse(response)["results"]
 
-movies.map do |movie| Movie.create!(
-  name: movie['title'],
-  backdrop_path: movie['backdrop_path'],
-  overview: movie['overview'])
+results.map do |result| Movie.create!(
+  name: result['title'],
+  backdrop_path: result['backdrop_path'],
+  overview: result['overview'],
+  popularity: result['popularity'])
 end
 
 theaters = Theater.all
 
 Movie.all.each do |movie|
   rand(5..10).times do |i|
-    movie.screenings << Screening.new(scheduled_at: rand(1..72).business_hours.from_now.beginning_of_hour, theater: theaters.sample)
+    movie.screenings << Screening.new(scheduled_at: rand(1..170).business_hours.from_now.beginning_of_hour, theater: theaters.sample)
   end
 end
 
-40.times do
+100.times do
   customer = Customer.create!(
     first_name: Faker::Name.first_name,
     last_name: Faker::Name.last_name,
