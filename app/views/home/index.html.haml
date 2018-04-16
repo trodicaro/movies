@@ -3,7 +3,7 @@
 .card-columns
   - @movies.each do |movie|
     .card
-      = image_tag("http://image.tmdb.org/t/p/w342/#{movie.backdrop_path}", :alt => "Image for #{movie.name}", class: 'img-fluid')
+      = image_tag("https://image.tmdb.org/t/p/w342/#{movie.backdrop_path}", :alt => "Image for #{movie.name}", class: 'img-fluid')
       .card-body.p-3
         %h5.card-title.text-center
           = movie.name
