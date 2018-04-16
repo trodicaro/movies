@@ -32,11 +32,11 @@ I have used couple of new(ish) tools to me while getting this started: Bootstrap
 * As a customer I want to see a page with upcoming movies scheduled at each theater
 * As a customer I want to see which movies are sold out (disabled)
 * As a customer I want to purchase tickets for an available showing
-* As a customer I want to receive an email confirmation
+* As a customer I want to receive an email confirmation (not implemented yet)
 * As a theater owner I want to see on my dashboard popular movies
 * As a theater owner I want to see on my dashboard popular times
-* As a theater owner I want to see on my dashboard popular total revenue
-* As a theater owner I want to see on my dashboard popular revenue by day of the week
+* As a theater owner I want to see on my dashboard revenue by day of the week
+* As a theater owner I want to see on my dashboard total revenue (not implemented yet)
 
 ### Future development plans
 * authentication to use dashboard
