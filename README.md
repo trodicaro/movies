@@ -1,14 +1,16 @@
-I have used couple of new(ish) tools to me while getting this started: Bootstrap 4 (with flexbox) and PostgreSQL. I've had a good share of stumbles, but definitely learned a lot in the process.
+### Tools used
 
-
-### This project uses:
 * Rails 5 (requires ruby 2.2.2+)
 * PostgreSQL  9.5.12
 * Bootstrap 4
 
-*Install steps performed on Linux Mint OS based on Ubuntu 16.04.*
+###Schema
 
-### App setup:
+![](schema.png)
+
+### App setup
+
+*Install steps performed on Linux Mint OS based on Ubuntu 16.04.*
 
 * `git clone git@github.com:trodicaro/movies.git`
 * `cd movies`
@@ -22,10 +24,10 @@ I have used couple of new(ish) tools to me while getting this started: Bootstrap
 * `bundle install`
 * `rails db:create db:migrate`
 
-### Run tests:
+### Run tests
 * `bundle exec rspec`
 
-### View app:
+### View app
 * `rails s` and in browser visit http://0.0.0.0:3000/
 
 ### MVP user stories
@@ -39,7 +41,8 @@ I have used couple of new(ish) tools to me while getting this started: Bootstrap
 * As a theater owner I want to see on my dashboard total revenue (not implemented yet)
 
 ### Future development plans
-* authentication to use dashboard
+* set up FactoryBot, Database Cleaner and write tests for the existing functionality as well as going forward
+authentication to use dashboard
 * automate the setup ([sample how-to](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-16-04))
 * continuous integration and test coverage ([sample how-to](https://medium.com/craft-academy/getting-started-with-rails-tests-continuous-integration-deployment-7b5bfec905a5))
 * save pics with Paperclip ([sample how-to](http://julianveling.com/?p=18))
