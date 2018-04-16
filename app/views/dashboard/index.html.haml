@@ -114,7 +114,7 @@
         },
         series: [{
             name: 'Movie Sales',
-            data: #{raw @movie_sales.second}
+            data: #{raw @movie_sales.last.map(&:to_f)}
         }]
     });
 
@@ -151,7 +151,7 @@
         },
         series: [{
             name: 'Movie Popularity',
-            data: #{raw @popular_movies.last}
+            data: #{raw @popular_movies.last.map(&:to_f)}
         }]
     });
 
@@ -188,7 +188,7 @@
         },
         series: [{
             name: 'Daily Sales',
-            data: #{raw @daily_sales.second}
+            data: #{raw @daily_sales.last.map(&:to_f)}
         }]
     });
   });
